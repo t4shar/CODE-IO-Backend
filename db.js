@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = 'mongodb://localhost:27017/';
+const url = 'mongodb://localhost:27017/inotebook';
 
 const connecttomongo = ()=>{
     mongoose.connect(url,()=>{
@@ -7,4 +7,4 @@ const connecttomongo = ()=>{
     })
 }
 
-module.exports = connecttomongo;
+module.exports = connecttomongo;    
