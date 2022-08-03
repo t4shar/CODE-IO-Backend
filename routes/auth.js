@@ -20,7 +20,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ valierror :'true',success : 'false', error: errors.array() });
     }
 
     try {
@@ -29,7 +29,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ error: "Sorry a user with same email is already exits" });
+          .json({ valierror :'false' , succes : 'false', message : 'ALready have an account Try Login',error: "Sorry a user with same email is already exits" });
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -49,10 +49,10 @@ router.post(
 
       const auth_token = jwt.sign(data, JWT_TOKEN);
       // console.log(Jwt_data)
-      res.json({ auth_token });
+      res.json({ success :'true',auth_token });
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).send({valierror :'false', succes : "false" , message : "INTERNAL SERVER ERROR" , error : "INTERNAL SERVER ERROR"});
     }
   }
 );
@@ -72,11 +72,11 @@ router.post('/login',[
     const{email,password}=req.body;
     try {
       let user = await  User.findOne({email});
-      if(!user) return res.status(400).json({error : "User Not found"})
+      if(!user) return res.status(400).json({succes: "false" , message : "USER IS NOT REGISTERED"  ,error : "User Not found"})
       
       const passwordcompare = await bcrypt.compare(password,user.password)
       
-      if(!passwordcompare) return res.status(400).json({error : "Try to login with correct cruddentials"})
+      if(!passwordcompare) return res.status(400).json({  succes: "false" , message : "Wrong Password"  , error : "Try to login with correct cruddentials"})
       
       const data = {
         user: {
@@ -85,11 +85,11 @@ router.post('/login',[
       };
       
       const auth_token = jwt.sign(data, JWT_TOKEN);
-      res.json({auth_token})
+      res.json({ success : 'true' , auth_token})
       
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      res.status(500).json({succes : "false" , message : "INTERNAL SERVER ERROR" , error : "INTERNAL SERVER ERROR"})
     }
   })
   // Route 3 Get user login detail a user a user using : POST "/api/auth/getuser :  login required"

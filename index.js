@@ -1,10 +1,10 @@
 const connecttomongo = require('./db')
-const express = require('express')
 connecttomongo();
-const roter = express.Router()
+const express = require('express')
+var cors = require('cors')
 const app = express()
 const port = 5000
-
+app.use(cors());
 // midlle ware to use to req 
 app.use(express.json()) 
 
