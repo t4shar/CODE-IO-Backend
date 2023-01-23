@@ -14,6 +14,15 @@ router.get("/fetchnotes", fetchuser, async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+router.get("/getbyid/:id", fetchuser, async (req, res) => {
+  try {
+    const notes = await Note.findById(req.params.id)
+    res.json(notes);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 // Route 2 ADD a new  note using post request : LOGIN REQUIRED "/api/notes/addnote"
 router.post(

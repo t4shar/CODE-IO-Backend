@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.2.3",
     "bcryptjs": "^2.4.3",
     "cores": "^0.8.5",
     "cors": "^2.8.5",
